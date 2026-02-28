@@ -68,7 +68,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {% for script in scripts %}
   {# Ця умова перевіряє, чи НЕ є скрипт старою версією jQuery #}
   {% if 'jquery-2.1.1.min.js' not in script %}
-    <script src="{{ script }}"></script>
+    <script src="{{ script }}" defer></script>
   {% endif %}
 {% endfor %}
 {% for link in links %}
@@ -77,18 +77,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {% for analytic in analytics %}
 {{ analytic }}
 {% endfor %}
-<script>
-    let octFonts = localStorage.getItem('octFonts');
-	if (octFonts !== null) {
-        var octHead  = document.getElementsByTagName('head')[0];
-        var octLink  = document.createElement('link');
-        octLink.rel  = 'stylesheet';
-        octLink.type = 'text/css';
-        octLink.href = location.protocol + '//' + location.host + '/catalog/view/theme/oct_ultrastore/stylesheet/oct-fonts.css';
-        octLink.media = 'all';
-        octHead.appendChild(octLink);
-    }
-</script>
+<link rel="preload" href="catalog/view/theme/oct_ultrastore/stylesheet/oct-fonts.css" as="style">
+<link rel="stylesheet" href="catalog/view/theme/oct_ultrastore/stylesheet/oct-fonts.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="catalog/view/theme/oct_ultrastore/stylesheet/oct-fonts.css"></noscript>
 </head>
 <body class="{{ sidebar_position }}">
 {% if oct_bar_data.status is defined and oct_bar_data.status  %}
