@@ -9,5 +9,3 @@ strong{font-weight:bolder}.mb-0{margin-bottom:0!important}.image-additional-box{
 .us-product-left{min-height:520px}
 .top-info-ul{min-height:40px}
 @media (max-width:767px){.us-product-left{min-height:260px}.top-info-ul{min-height:50px}}
-.top-info-ul,.top-info-ul li{line-height:40px}
-@media (max-width:767px){.top-info-ul,.top-info-ul li{line-height:50px}}
