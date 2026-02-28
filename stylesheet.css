@@ -744,3 +744,41 @@ h2.price {
     background-image: none;
     background-color: #df5c39;
 }
+/* ================================
+   FIX CLS — PRODUCT IMAGE SLIDER
+   ================================ */
+
+/* Резервуємо місце під головне фото товару */
+.us-product-photo-main {
+    min-height: 600px;
+    position: relative;
+}
+
+/* Резерв під thumbnails (особливо mobile) */
+#image-additional {
+    min-height: 120px;
+}
+/* ================================
+   CLS FIX — PRODUCT PAGE
+   ================================ */
+
+main {
+    min-height: 900px;
+}
+
+/* Головний блок фото */
+.us-product-photo-main {
+    height: 600px;
+    min-height: 600px;
+    overflow: hidden;
+}
+
+/* Slick list */
+.us-product-photo-main .slick-list {
+    height: 600px !important;
+}
+
+/* Мініатюри */
+#image-additional {
+    min-height: 120px;
+}
