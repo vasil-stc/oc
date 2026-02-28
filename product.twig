@@ -46,9 +46,11 @@
 										{% else %}
 											srcset="{{ main_image.thumb_slider }} 600w, {{ main_image.popup }} 1000w"
 										{% endif %}
-										sizes="(max-width: 576px) 100vw, (max-width: 992px) 50vw, 600px"
-										fetchpriority="high"
-										width="600"
+											sizes="(max-width: 576px) 100vw, (max-width: 992px) 50vw, 600px"
+											fetchpriority="high"
+											decoding="async"
+											loading="eager"
+											width="600"
 										height="600"
 										class="img-fluid"
 										alt="{{ heading_title }}"
@@ -114,6 +116,7 @@
 						<script>
 $(function () {
 
+    function initProductSlick() {
     /* Головний слайдер */
     $('.us-product-slide-box').slick({
         infinite: {{ images|length > 1 ? 'true' : 'false' }},
@@ -140,6 +143,13 @@ $(function () {
         prevArrow:"<button type='button' class='slick-prev'>&lt;</button>",
         nextArrow:"<button type='button' class='slick-next'>&gt;</button>"
     });
+    }
+
+    if (window.requestAnimationFrame) {
+        window.requestAnimationFrame(initProductSlick);
+    } else {
+        setTimeout(initProductSlick, 0);
+    }
 
 });
 </script>
