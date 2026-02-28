@@ -21,11 +21,34 @@
 								{% if oct_sticker_you_save and you_save %}
 									<div class="us-product-stickers-item us-product-stickers-discount" id="main-product-you-save">{{ you_save }}</div>
 								{% endif %}
-								{% for key, oct_sticker in oct_product_stickers %}
-									{% if oct_sticker is not empty %}
-									<div class="us-product-stickers-item us-product-stickers-{{ key }}">{{ oct_sticker }}</div>
-									{% endif %}
-								{% endfor %}
+							{% endfor %}
+						</div>
+						{% endif %}
+
+						{# --- ПОЧАТОК БЛОКУ ЗОБРАЖЕНЬ (ВИПРАВЛЕНО) --- #}
+						<div class="us-product-photo-main mb-4">
+							<div class="us-product-slide-box">
+							{# ГОЛОВНЕ ЗОБРАЖЕННЯ #}
+							<div class="us-product-slide">
+								<a href="{{ main_image.popup }}" class="oct-gallery" onClick="return false;">
+									<img
+										src="{{ main_image.thumb_slider }}"
+										{% if main_image.srcset_slider %}
+											srcset="{{ main_image.srcset_slider }}"
+										{% else %}
+											srcset="{{ main_image.thumb_slider }} 600w, {{ main_image.popup }} 1000w"
+										{% endif %}
+											sizes="(max-width: 576px) 100vw, (max-width: 992px) 50vw, 600px"
+											fetchpriority="high"
+											decoding="async"
+											loading="eager"
+											width="600"
+										height="600"
+										class="img-fluid"
+										alt="{{ heading_title }}"
+										title="{{ heading_title }}"
+									/>
+								</a>
 							</div>
 							{% endif %}
 
@@ -69,34 +92,42 @@
 
 							<script>
 $(function () {
-    if ($('.us-product-slide-box').length && !$('.us-product-slide-box').hasClass('slick-initialized')) {
-        $('.us-product-slide-box').slick({
-            infinite: {{ gallery_count > 1 ? 'true' : 'false' }},
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            fade: false,
-            draggable: false,
-            adaptiveHeight: false,
-            arrows: false,
-            dots: false,
-            asNavFor: '#image-additional'
-        });
+
+    function initProductSlick() {
+    /* Головний слайдер */
+    $('.us-product-slide-box').slick({
+        infinite: {{ images|length > 1 ? 'true' : 'false' }},
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        fade: false,
+        draggable: false,
+        adaptiveHeight: false,   // КРИТИЧНО
+        arrows: false,
+        dots: false,
+        asNavFor: '#image-additional'
+    });
+
+    /* Мініатюри */
+    $('#image-additional').slick({
+        infinite: {{ images|length > 3 ? 'true' : 'false' }},
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        focusOnSelect: true,
+        adaptiveHeight: false,   // КРИТИЧНО
+        arrows: true,
+        dots: false,
+        asNavFor: '.us-product-slide-box',
+        prevArrow:"<button type='button' class='slick-prev'>&lt;</button>",
+        nextArrow:"<button type='button' class='slick-next'>&gt;</button>"
+    });
     }
 
-    if ($('#image-additional').length && !$('#image-additional').hasClass('slick-initialized')) {
-        $('#image-additional').slick({
-            infinite: {{ gallery_count > 4 ? 'true' : 'false' }},
-            slidesToShow: 6,
-            slidesToScroll: 1,
-            focusOnSelect: true,
-            adaptiveHeight: false,
-            arrows: true,
-            dots: false,
-            asNavFor: '.us-product-slide-box',
-            prevArrow:"<button type='button' class='slick-prev'>&lt;</button>",
-            nextArrow:"<button type='button' class='slick-next'>&gt;</button>"
-        });
+    if (window.requestAnimationFrame) {
+        window.requestAnimationFrame(initProductSlick);
+    } else {
+        setTimeout(initProductSlick, 0);
     }
+
 });
 </script>
 						</div>
